@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daleel — Independent. Fearless. Truthful.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0c0b09;--paper:#f5f2ec;--cream:#ede9e0;--red:#c0392b;--muted:#6b6560;--faint:#a8a29e;--rule:#d4cfc8;--serif:'Playfair Display',Georgia,serif;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9998;opacity:0.5}
+.masthead{border-bottom:3px double var(--ink);padding:0 40px}
+.mh-top{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em}
+.mh-brand{text-align:center;padding:20px 0 14px}
+.mh-arabic{font-size:clamp(44px,6vw,80px);font-family:var(--serif);line-height:1;display:block}
+.mh-name{font-family:var(--mono);font-size:11px;letter-spacing:.5em;text-transform:uppercase;color:var(--muted);margin-top:4px;display:block}
+.mh-rule{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:10px;font-family:var(--mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint)}
+.mh-rule::before,.mh-rule::after{content:'';flex:1;max-width:100px;height:1px;background:var(--rule)}
+.nav-bar{background:var(--ink);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;flex-wrap:wrap;justify-content:center;padding:0 40px}
+.nb{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6);padding:13px 16px;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;border-right:1px solid rgba(255,255,255,.07)}
+.nb:first-child{border-left:1px solid rgba(255,255,255,.07)}
+.nb:hover{color:#fff}
+.nb.on{color:#fff;border-bottom-color:var(--red)}
+.breaking{background:var(--red);padding:10px 40px;display:flex;align-items:center;gap:14px;overflow:hidden}
+.bl{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#fff;white-space:nowrap;background:rgba(0,0,0,.2);padding:4px 10px;flex-shrink:0}
+.tw{overflow:hidden;flex:1}
+.tt{display:flex;white-space:nowrap;animation:tick 38s linear infinite}
+.ti{font-family:var(--sans);font-size:11px;color:rgba(255,255,255,.9);padding:0 28px}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tt{animation-duration:18s!important}
+.page{display:none}
+.page.on{display:block;animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.C{max-width:1240px;margin:0 auto;padding:0 40px}
+.sh{padding:40px 0 28px;border-bottom:3px double var(--ink)}
+.sh-k{font-family:var(--mono);font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.sh-t{font-family:var(--serif);font-size:clamp(44px,5.5vw,76px);font-weight:900;line-height:.95;letter-spacing:-.03em}
+.sh-d{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:16px;margin-top:14px;max-width:580px;line-height:1.6}
+.sh-q{border-left:3px solid var(--red);padding-left:18px;margin-top:20px}
+.sh-q p{font-family:var(--serif);font-size:15px;font-style:italic}
+.sh-q cite{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:4px;display:block}
+.div{display:flex;align-items:center;gap:14px;padding:20px 0;border-bottom:1px solid var(--ink)}
+.div-l{font-family:var(--mono);font-size:10px;letter-spacing:.38em;text-transform:uppercase;font-weight:500;white-space:nowrap}
+.div-r{flex:1;height:1px;background:var(--ink)}
+.hero{display:grid;grid-template-columns:1fr 320px;border-bottom:1px solid var(--rule)}
+.hm{padding:44px 44px 44px 0;border-right:1px solid var(--rule)}
+.htag{font-family:var(--mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--red);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.htag::before{content:'';display:block;width:20px;height:1px;background:var(--red)}
+.hhed{font-family:var(--serif);font-size:clamp(32px,4vw,56px);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px}
+.hdeck{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--muted);line-height:1.5;margin-bottom:22px;max-width:560px}
+.hmeta{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.1em;display:flex;align-items:center;gap:12px}
+.hmeta::before{content:'';display:block;width:14px;height:1px;background:var(--faint)}
+.hs{padding:40px 0 40px 28px}
+.ss{padding:16px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+.ss:last-child{border-bottom:none}
+.ss-t{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+.ss-h{font-family:var(--serif);font-size:15px;font-weight:700;line-height:1.25;transition:color .2s}
+.ss:hover .ss-h{color:var(--red)}
+.ss-m{font-family:var(--mono);font-size:9px;color:var(--faint);margin-top:4px}
+.cg{display:grid;gap:0;border-bottom:1px solid var(--rule)}
+.cg4{grid-template-columns:repeat(4,1fr)}
+.cg3{grid-template-columns:repeat(3,1fr)}
+.cd{padding:26px 22px 26px 0;border-right:1px solid var(--rule);cursor:pointer;transition:background .2s}
+.cd:last-child{border-right:none;padding-right:0}
+.cd:first-child{padding-left:0}
+.cd:hover{background:var(--cream)}
+.cd-r{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:7px}
+.cd-h{font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.2;margin-bottom:7px;transition:color .2s}
+.cd:hover .cd-h{color:var(--red)}
+.cd-d{font-size:12px;color:var(--muted);line-height:1.6}
+.cd-m{font-family:var(--mono);font-size:9px;color:var(--faint);margin-top:9px}
+.al{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.ac{padding:34px 34px 34px 0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);cursor:pointer;transition:background .2s}
+.ac:nth-child(even){padding:34px 0 34px 34px;border-right:none}
+.ac:nth-last-child(-n+2){border-bottom:none}
+.ac:hover{background:var(--cream)}
+.ac-v{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+.ac-t{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.ac-h{font-family:var(--serif);font-size:clamp(18px,2vw,25px);font-weight:700;line-height:1.15;margin-bottom:9px;transition:color .2s}
+.ac:hover .ac-h{color:var(--red)}
+.ac-s{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:13px}
+.ac-m{font-family:var(--mono);font-size:9px;color:var(--faint);display:flex;align-items:center;gap:9px}
+.ac-m::before{content:'';width:13px;height:1px;background:var(--faint)}
+.rb{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-top:13px;cursor:pointer;background:none;border:none;padding:0;transition:gap .25s}
+.rb:hover{gap:13px}
+.rb::after{content:'→'}
+.aw{max-width:700px;margin:0 auto;padding:44px 0 80px}
+.back{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:8px;margin-bottom:34px;background:none;border:none;padding:0;transition:color .2s}
+.back:hover{color:var(--ink)}
+.back::before{content:'←'}
+.av{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.at{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.at::before{content:'';width:16px;height:1px;background:var(--red)}
+.ah{font-family:var(--serif);font-size:clamp(28px,3.6vw,48px);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:14px}
+.ad{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--muted);line-height:1.5;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--rule)}
+.aby{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:34px;letter-spacing:.08em}
+.aau{color:var(--ink);font-weight:500}
+.abody{font-size:17px;line-height:1.85}
+.abody p{margin-bottom:1.3em}
+.abody p:first-child::first-letter{font-family:var(--serif);font-size:66px;font-weight:900;float:left;line-height:.78;margin:8px 10px 0 0;color:var(--red)}
+.apq{border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);margin:34px 0;padding:26px 0}
+.apq p{font-family:var(--serif);font-size:21px;font-style:italic;font-weight:700;line-height:1.3}
+.afoot{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:34px;padding-top:20px;border-top:1px solid var(--rule)}
+.rgs{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid var(--rule)}
+.rg{padding:30px 22px 30px 0;border-right:1px solid var(--rule);cursor:pointer;transition:background .2s}
+.rg:last-child{border-right:none;padding-right:0}
+.rg:first-child{padding-left:0}
+.rg:hover{background:var(--cream)}
+.rg-f{font-size:30px;margin-bottom:9px}
+.rg-n{font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:4px}
+.rg-c{font-family:var(--mono);font-size:10px;color:var(--faint)}
+.pod-h{padding:52px 0 38px;border-bottom:3px double var(--ink)}
+.pod-h h1{font-family:var(--serif);font-size:clamp(42px,5.5vw,76px);font-weight:900;line-height:.95;letter-spacing:-.03em}
+.pod-h p{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:16px;margin-top:13px;max-width:480px}
+.shd{font-family:var(--mono);font-size:10px;letter-spacing:.38em;text-transform:uppercase;padding:22px 0 13px;border-bottom:1px solid var(--ink)}
+.ep{display:grid;grid-template-columns:52px 1fr 40px;gap:18px;align-items:center;padding:18px 0;border-bottom:1px solid var(--rule);cursor:pointer;transition:background .2s}
+.ep:hover{background:var(--cream);margin:0 -40px;padding:18px 40px}
+.ep-n{font-family:var(--mono);font-size:26px;color:var(--rule);font-weight:300}
+.ep-t{font-family:var(--serif);font-size:17px;font-weight:700;margin-bottom:3px}
+.ep-d{font-size:12px;color:var(--muted)}
+.ep-p{width:36px;height:36px;border-radius:50%;border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.ep:hover .ep-p{background:var(--ink);color:#fff}
+.ep-p svg{width:12px;height:12px;fill:currentColor;margin-left:2px}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:68px;padding:52px 0}
+.am{font-family:var(--serif);font-size:clamp(24px,2.6vw,38px);font-weight:700;line-height:1.15;margin-bottom:26px}
+.ab p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:.9em}
+.prs{display:flex;flex-direction:column}
+.pr{padding:18px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:58px 1fr;gap:12px}
+.pr-n{font-family:var(--mono);font-size:26px;color:var(--rule);font-weight:300;line-height:1}
+.pr-ti{font-family:var(--serif);font-size:16px;font-weight:700;margin-bottom:4px}
+.pr-d{font-size:13px;color:var(--muted);line-height:1.7}
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:44px 0}
+.tm{padding:26px 26px 26px 0;border-right:1px solid var(--rule)}
+.tm:nth-child(3n){border-right:none;padding-right:0}
+.tm:nth-child(n+4){border-top:1px solid var(--rule);padding-top:26px}
+.tm-r{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:7px}
+.tm-n{font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:6px}
+.tm-d{font-size:13px;color:var(--muted);line-height:1.7}
+.cog{display:grid;grid-template-columns:1fr 1fr;gap:68px;padding:52px 0}
+.cb{margin-bottom:26px}
+.cb-l{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.cb p{font-size:14px;color:var(--muted);line-height:1.7}
+.cb a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.sl{display:flex;flex-direction:column;gap:9px;margin-top:18px}
+.sl a{font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:7px}
+.sl a::before{content:'↗';color:var(--red)}
+.sl a:hover{color:var(--ink)}
+.pw{max-width:720px;padding:52px 0 80px}
+.ps{margin-bottom:42px}
+.ps h2{font-family:var(--serif);font-size:25px;font-weight:700;margin-bottom:13px;padding-bottom:9px;border-bottom:1px solid var(--rule)}
+.ps h3{font-family:var(--serif);font-size:16px;font-weight:700;margin:18px 0 7px}
+.ps p,.ps li{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:7px}
+.ps ul{padding-left:16px}
+.ps li{list-style:disc}
+.ps a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.adm-btn{position:fixed;bottom:24px;right:24px;z-index:500;background:var(--ink);color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:12px 16px;cursor:pointer;border:none;border-bottom:2px solid var(--red);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.adm{position:fixed;inset:0;z-index:600;background:rgba(12,11,9,.9);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.adm.open{opacity:1;pointer-events:all}
+.adm-box{background:var(--paper);width:min(660px,95vw);max-height:92vh;overflow-y:auto;padding:36px;position:relative}
+.adm-x{position:absolute;top:14px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1}
+.adm-h{font-family:var(--serif);font-size:26px;font-weight:700;margin-bottom:4px}
+.adm-s{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--muted);margin-bottom:24px}
+.fr{margin-bottom:16px}
+.fl{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+.fi,.fs,.fta{width:100%;background:var(--cream);border:1px solid var(--rule);color:var(--ink);font-family:var(--sans);font-size:13px;padding:9px 13px;outline:none;transition:border-color .2s}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--ink)}
+.fta{min-height:130px;resize:vertical;line-height:1.6}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sub-btn{background:var(--ink);color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;padding:13px 26px;cursor:pointer;border:none;margin-top:6px;transition:background .2s;border-bottom:2px solid var(--red)}
+.sub-btn:hover{background:#222}
+.ok{background:#1a3a1a;color:#7cfc7c;font-family:var(--mono);font-size:11px;padding:10px 14px;margin-top:14px;display:none}
+.ok.show{display:block}
+.aml{margin-top:28px;padding-top:20px;border-top:1px solid var(--rule)}
+.aml-t{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.aml-list{display:flex;flex-direction:column;gap:7px;max-height:200px;overflow-y:auto}
+.ami{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;background:var(--cream);border:1px solid var(--rule);font-size:13px}
+.ami-h{font-family:var(--serif);font-weight:700;font-size:14px}
+.ami-m{font-family:var(--mono);font-size:9px;color:var(--faint)}
+.ami-d{background:none;border:none;color:var(--red);cursor:pointer;font-family:var(--mono);font-size:10px;padding:4px 7px;letter-spacing:.1em;text-transform:uppercase}
+footer{background:var(--ink);color:rgba(255,255,255,.65);margin-top:60px}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding:52px 40px 40px}
+.fa{font-family:var(--serif);font-size:32px;color:#fff;display:block;margin-bottom:4px}
+.fn{font-family:var(--mono);font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-bottom:13px}
+.fp{font-size:13px;line-height:1.7;max-width:230px}
+.fct{font-family:var(--mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:16px}
+.fl2{list-style:none;display:flex;flex-direction:column;gap:8px}
+.fl2 li{font-size:13px;color:rgba(255,255,255,.55);cursor:pointer;transition:color .2s}
+.fl2 li:hover{color:#fff}
+.fb{border-top:1px solid rgba(255,255,255,.08);padding:16px 40px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:rgba(255,255,255,.26)}
+@media(max-width:860px){.masthead,.nav-inner,.C,.ft,.fb,.breaking{padding-left:20px;padding-right:20px}.hero{grid-template-columns:1fr}.hm{padding:26px 0;border-right:none;border-bottom:1px solid var(--rule)}.hs{padding:18px 0}.cg4,.cg3{grid-template-columns:1fr 1fr}.al{grid-template-columns:1fr}.ac,.ac:nth-child(even){padding:26px 0;border-right:none}.rgs{grid-template-columns:1fr 1fr}.tg{grid-template-columns:1fr 1fr}.ag,.cog{grid-template-columns:1fr;gap:36px}.ft{grid-template-columns:1fr 1fr}.fg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mh-top">
+    <span id="td"></span>
+    <span>Independent · Fearless · Truthful</span>
+    <span>husseinonlook.com/uk</span>
+  </div>
+  <div class="mh-brand">
+    <span class="mh-arabic">دليل</span>
+    <span class="mh-name">Daleel</span>
+    <div class="mh-rule">Since 2026</div>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <button class="nb on" onclick="go('home',this)">Home</button>
+    <button class="nb" onclick="go('about',this)">About Us</button>
+    <button class="nb" onclick="go('signed',this)">Signed</button>
+    <button class="nb" onclick="go('podcast',this)">Podcast</button>
+    <button class="nb" onclick="go('policies',this)">Policies</button>
+    <button class="nb" onclick="go('contact',this)">Contact Us</button>
+    <button class="nb" onclick="go('team',this)">Team</button>
+  </div>
+</nav>
+
+<div class="breaking">
+  <span class="bl">Latest</span>
+  <div class="tw"><div class="tt" id="tt"></div></div>
+</div>
+
+<!-- HOME -->
+<div class="page on" id="P-home"><div class="C">
+  <div class="hero">
+    <div class="hm">
+      <p class="htag">Special Issue · UK Politics · Vol. 02</p>
+      <h1 class="hhed">Glorious Revolution or Devolution?</h1>
+      <p class="hdeck">The country is in dire need of a glorious revolution, says former chancellor Nadhim Zahawi, as he defects to Reform UK following a refused peerage — and a seven-figure HMRC settlement.</p>
+      <p class="hmeta">By Arnan Hussein &nbsp;·&nbsp; January 2026</p>
+      <button class="rb" onclick="oa('zahawi')" style="margin-top:18px">Read Article</button>
+    </div>
+    <div class="hs">
+      <div class="ss" onclick="oa('yourparty')"><p class="ss-t">UK · Politics</p><p class="ss-h">Will Your Party Decide Your Future?</p><p class="ss-m">Corbyn &amp; Sultana · Jan 2026</p></div>
+      <div class="ss" onclick="oa('greenland')"><p class="ss-t">US · Trump</p><p class="ss-h">Getting Greenland — Easy Way or Hard Way?</p><p class="ss-m">Arctic ambitions · Jan 2026</p></div>
+      <div class="ss" onclick="oa('iran')"><p class="ss-t">Middle East</p><p class="ss-h">Is This It for Iran?</p><p class="ss-m">Protests escalate · Jan 2026</p></div>
+      <div class="ss" onclick="oa('japan')"><p class="ss-t">Far East</p><p class="ss-h">Japan's Snap Election &amp; Takaichi's Historic Victory</p><p class="ss-m">Feb 2026</p></div>
+    </div>
+  </div>
+  <div class="div"><span class="div-r"></span><span class="div-l">United Kingdom</span><span class="div-r"></span></div>
+  <div class="cg cg4">
+    <div class="cd" onclick="oa('zahawi')"><p class="cd-r">Reform UK</p><h3 class="cd-h">Glorious Revolution or Devolution?</h3><p class="cd-d">Zahawi defects, declares the country needs radical change.</p><p class="cd-m">Jan 2026</p></div>
+    <div class="cd" onclick="oa('yourparty')"><p class="cd-r">New Parties</p><h3 class="cd-h">Will Your Party Decide Your Future?</h3><p class="cd-d">Corbyn and Sultana launch Britain's new socialist force.</p><p class="cd-m">Jan 2026</p></div>
+    <div class="cd" onclick="oa('manutd')"><p class="cd-r">Sport</p><h3 class="cd-h">Manchester United is Red</h3><p class="cd-d">Carrick's interim spell reignites Old Trafford.</p><p class="cd-m">Jan 2026</p></div>
+    <div class="cd" onclick="oa('starmer')"><p class="cd-r">Labour</p><h3 class="cd-h">Labour Against Starmer</h3><p class="cd-d">Is the PM heading for the exit by Christmas 2026?</p><p class="cd-m">Jan 2026</p></div>
+    <div class="cd" onclick="oa('trafalgar')"><p class="cd-r">UK · Islam</p><h3 class="cd-h">Glorious Hypocrisy: Tory Selective Outrage Over Faith</h3><p class="cd-d">Diwali at Downing Street was fine. Muslim prayer in Trafalgar Square is "domination." The hypocrisy is the point.</p><p class="cd-m">Mar 2026</p></div>
+  </div>
+  <div class="div"><span class="div-r"></span><span class="div-l">World</span><span class="div-r"></span></div>
+  <div class="cg cg4">
+    <div class="cd" onclick="oa('greenland')"><p class="cd-r">US · Trump</p><h3 class="cd-h">Greenland — Easy Way or Hard Way?</h3><p class="cd-d">Trump won't rule out force. Denmark and Greenland refuse.</p><p class="cd-m">Jan 2026</p></div>
+    <div class="cd" onclick="oa('mamdani')"><p class="cd-r">US · New York</p><h3 class="cd-h">Mamdani's New NYC</h3><p class="cd-d">Rent freezes, affordable housing, corporate tax surcharge.</p><p class="cd-m">Feb 2026</p></div>
+    <div class="cd" onclick="oa('iran')"><p class="cd-r">Middle East</p><h3 class="cd-h">Is This It for Iran?</h3><p class="cd-d">Protesters target government buildings as rial collapses.</p><p class="cd-m">Jan 2026</p></div>
+    <div class="cd" onclick="oa('yemen')"><p class="cd-r">Middle East</p><h3 class="cd-h">Yemen's Humanitarian Crisis</h3><p class="cd-d">Worldwide alarm as conditions worsen after a decade of war.</p><p class="cd-m">Feb 2026</p></div>
+  </div>
+  <div class="div"><span class="div-r"></span><span class="div-l">Far East</span><span class="div-r"></span></div>
+  <div class="cg cg3">
+    <div class="cd" onclick="oa('china')"><p class="cd-r">China · Military</p><h3 class="cd-h">Xi Jinping and the Firing of the Top General</h3><p class="cd-d">General Zhang placed under investigation as Xi tightens grip on the PLA.</p><p class="cd-m">Feb 2026</p></div>
+    <div class="cd" onclick="oa('japan')"><p class="cd-r">Japan · Election</p><h3 class="cd-h">Japan's Snap Election &amp; Takaichi's Victory</h3><p class="cd-d">Japan's first female PM wins a supermajority in a historic winter vote.</p><p class="cd-m">Feb 2026</p></div>
+    <div class="cd" onclick="oa('munich')"><p class="cd-r">Global Security</p><h3 class="cd-h">62nd Munich Security Conference</h3><p class="cd-d">Fractures in Western alliances grow as world leaders gather.</p><p class="cd-m">Feb 2026</p></div>
+  </div>
+  <div id="home-new"></div>
+</div></div>
+
+<!-- SIGNED -->
+<div class="page" id="P-signed"><div class="C">
+  <div class="sh"><p class="sh-k">Signed by Daleel</p><h1 class="sh-t">Our Coverage</h1><p class="sh-d">Independent reporting on the political, social and cultural forces shaping Britain and the world.</p></div>
+  <div class="rgs">
+    <div class="rg" onclick="go('uk',null)"><div class="rg-f">🇬🇧</div><p class="rg-n">United Kingdom</p><p class="rg-c" id="ukc">5 articles</p></div>
+    <div class="rg" onclick="go('us',null)"><div class="rg-f">🇺🇸</div><p class="rg-n">United States</p><p class="rg-c" id="usc">2 articles</p></div>
+    <div class="rg" onclick="go('me',null)"><div class="rg-f">🌙</div><p class="rg-n">Middle East</p><p class="rg-c" id="mec">2 articles</p></div>
+    <div class="rg" onclick="go('fe',null)"><div class="rg-f">🌏</div><p class="rg-n">Far East</p><p class="rg-c" id="fec">3 articles</p></div>
+  </div>
+</div></div>
+
+<!-- UK -->
+<div class="page" id="P-uk"><div class="C">
+  <div class="sh"><p class="sh-k">Signed by Daleel</p><h1 class="sh-t">United Kingdom</h1><p class="sh-d">Clear, insightful, and independent reporting on Britain's political landscape.</p><div class="sh-q"><p>"Democracy is the worst form of government, except for all the others."</p><cite>— Winston Churchill, British Prime Minister</cite></div></div>
+  <div class="al" id="L-uk">
+    <div class="ac" onclick="oa('zahawi')"><p class="ac-v">Special Issue · Vol. 02 · January 2026</p><p class="ac-t">Reform UK · Politics</p><h2 class="ac-h">Glorious Revolution or Devolution?</h2><p class="ac-s">The country is in dire need of a glorious revolution, says Nadhim Zahawi, as he defects to Reform UK.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+    <div class="ac" onclick="oa('yourparty')"><p class="ac-v">Special Issue · Vol. 02 · January 2026</p><p class="ac-t">New Parties · Socialism</p><h2 class="ac-h">Will Your Party Decide Your Future?</h2><p class="ac-s">Corbyn and Sultana launch Your Party — a socialist movement vowing to take on the rich and give power back to the people.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+    <div class="ac" onclick="oa('manutd')"><p class="ac-v">Special Issue · Vol. 02 · January 2026</p><p class="ac-t">Sport · Football</p><h2 class="ac-h">Manchester United is Red</h2><p class="ac-s">Under interim manager Michael Carrick, United delivered a statement of intent. Second-half goals sparked scenes of joy at Old Trafford.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+    <div class="ac" onclick="oa('starmer')"><p class="ac-v">Special Issue · Vol. 02 · January 2026</p><p class="ac-t">Labour · Leadership</p><h2 class="ac-h">Labour Against Starmer</h2><p class="ac-s">Scottish First Minister John Swinney declares it is the "end of the road" for Keir Starmer, linking Labour's fate to the May 2026 elections.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+    <div class="ac" onclick="oa('munich')"><p class="ac-v">Special Issue · Vol. 02 · February 2026</p><p class="ac-t">Global Security</p><h2 class="ac-h">Global Security in Focus: The 62nd Munich Security Conference</h2><p class="ac-s">World leaders gather in Munich amid rising geopolitical strain. Cracks in Western alliances and public protests mark a pivotal forum.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+    <div class="ac" onclick="oa('trafalgar')"><p class="ac-v">Special Issue · UK · March 2026</p><p class="ac-t">UK Politics · Islam</p><h2 class="ac-h">Glorious Hypocrisy: The Conservatives' Selective Outrage Over Faith in Public Life</h2><p class="ac-s">The Conservatives celebrated Diwali at Downing Street, stayed silent on a Sikh rally that closed Luton, and called Muslim prayer in Trafalgar Square an act of domination — the hypocrisy could not be clearer.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+  </div>
+</div></div>
+
+<!-- US -->
+<div class="page" id="P-us"><div class="C">
+  <div class="sh"><p class="sh-k">Signed by Daleel</p><h1 class="sh-t">United States</h1><p class="sh-d">Covering the ever-evolving political landscape of the United States — from federal policy and elections to social movements.</p><div class="sh-q"><p>"In a democracy, the individual enjoys not only the ultimate power but carries the ultimate responsibility."</p><cite>— Norman Cousins</cite></div></div>
+  <div class="al" id="L-us">
+    <div class="ac" onclick="oa('greenland')"><p class="ac-v">Special Issue · Vol. 02 · January 2026</p><p class="ac-t">Trump · Foreign Policy</p><h2 class="ac-h">Getting Greenland — The Easy Way or Hard Way?</h2><p class="ac-s">US President Donald Trump insists his country needs to acquire Greenland for national security and has not ruled out using military force.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+    <div class="ac" onclick="oa('mamdani')"><p class="ac-v">Special Issue · Vol. 02 · February 2026</p><p class="ac-t">New York · Local Politics</p><h2 class="ac-h">Mamdani's New NYC</h2><p class="ac-s">Zohran Mamdani takes office as New York City's new mayor, promising rent freezes, affordable housing and a surcharge on the wealthy.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+  </div>
+</div></div>
+
+<!-- ME -->
+<div class="page" id="P-me"><div class="C">
+  <div class="sh"><p class="sh-k">Signed by Daleel</p><h1 class="sh-t">Middle East</h1><p class="sh-d">Independent, insightful reporting on the region's complex political landscape — from governance to social movements and conflict.</p><div class="sh-q"><p>"No nation can rise to the heights of glory without first uniting its people."</p><cite>— Gamal Abdel Nasser</cite></div></div>
+  <div class="al" id="L-me">
+    <div class="ac" onclick="oa('iran')"><p class="ac-v">Special Issue · Vol. 02 · January 2026</p><p class="ac-t">Iran · Protests</p><h2 class="ac-h">Is This It for Iran?</h2><p class="ac-s">No going back as protesters target government buildings. The rial hits an all-time low. Security forces respond with lethal force.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+    <div class="ac" onclick="oa('yemen')"><p class="ac-v">Special Issue · Vol. 02 · February 2026</p><p class="ac-t">Yemen · Humanitarian</p><h2 class="ac-h">Yemen's Humanitarian Crisis: Worldwide Alarm Over Worsening Conditions</h2><p class="ac-s">As 2026 unfolds, Yemen remains one of the world's most severe humanitarian emergencies, with millions facing hunger, disease and displacement.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+  </div>
+</div></div>
+
+<!-- FE -->
+<div class="page" id="P-fe"><div class="C">
+  <div class="sh"><p class="sh-k">Signed by Daleel</p><h1 class="sh-t">Far East</h1><p class="sh-d">Independent reporting and analysis on the political, economic, and social developments shaping East Asia.</p><div class="sh-q"><p>"Vision without action is a daydream; action without vision is a nightmare."</p><cite>— Japanese Proverb</cite></div></div>
+  <div class="al" id="L-fe">
+    <div class="ac" onclick="oa('china')"><p class="ac-v">Special Issue · Vol. 02 · February 2026</p><p class="ac-t">China · Military</p><h2 class="ac-h">China, Xi Jinping and the Firing of the Top General</h2><p class="ac-s">General Zhang Youxia — effectively China's second-highest military leader — placed under investigation for "serious violations of discipline and law."</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+    <div class="ac" onclick="oa('japan')"><p class="ac-v">Special Issue · Vol. 02 · February 2026</p><p class="ac-t">Japan · Election</p><h2 class="ac-h">Japan's Snap Election and Takaichi's Historic Victory</h2><p class="ac-s">Japan's first female Prime Minister wins a supermajority — the LDP's best result since the current parliamentary system was established.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+    <div class="ac" onclick="oa('munich')"><p class="ac-v">Special Issue · Vol. 02 · February 2026</p><p class="ac-t">Global Security</p><h2 class="ac-h">62nd Munich Security Conference and Geopolitical Strain</h2><p class="ac-s">Rising tensions, fractured alliances and public protests marked the 62nd Munich Security Conference as leaders debated global uncertainty.</p><p class="ac-m">By Arnan Hussein</p><button class="rb">Read Article</button></div>
+  </div>
+</div></div>
+
+<!-- ARTICLE READER -->
+<div class="page" id="P-article"><div class="C"><div class="aw" id="AR"></div></div></div>
+
+<!-- PODCAST -->
+<div class="page" id="P-podcast"><div class="C">
+  <div class="pod-h"><h1>Daleel<br>Podcast</h1><p>Long-form conversations on the politics, people and forces shaping Britain and the world.</p></div>
+  <p class="shd">Season 1 — Bangladesh</p>
+  <div class="ep" onclick="window.open('https://www.youtube.com/watch?v=PR3kTNqrMUk','_blank')"><span class="ep-n">01</span><div><p class="ep-t">Understanding the System</p><p class="ep-d">An introduction to the political forces shaping Bangladesh today.</p></div><div class="ep-p"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+  <div class="ep" onclick="window.open('https://www.youtube.com/watch?v=hvtRaE0IA14','_blank')"><span class="ep-n">02</span><div><p class="ep-t">Politics as a Family Affair</p><p class="ep-d">How dynasties and family networks dominate political life.</p></div><div class="ep-p"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+  <div class="ep" onclick="window.open('https://www.youtube.com/watch?v=RSpbPDRSK9s','_blank')"><span class="ep-n">03</span><div><p class="ep-t">Breaking the Cycle</p><p class="ep-d">Can Bangladesh escape the loop of political violence and instability?</p></div><div class="ep-p"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+  <div class="ep" onclick="window.open('https://www.youtube.com/watch?v=TZevTePqNTs','_blank')"><span class="ep-n">04</span><div><p class="ep-t">Unmasking the Players</p><p class="ep-d">Who holds real power — and who is pulling the strings from behind?</p></div><div class="ep-p"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+  <div class="ep" onclick="window.open('https://www.youtube.com/watch?v=gEuz6zazONY','_blank')"><span class="ep-n">05</span><div><p class="ep-t">The Road Ahead</p><p class="ep-d">What does a better Bangladesh look like — and how do we get there?</p></div><div class="ep-p"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+  <p class="shd" style="margin-top:28px">Season 2 — United Kingdom &nbsp;<span style="font-size:9px;color:var(--faint);letter-spacing:.1em">Coming Soon</span></p>
+</div></div>
+
+<!-- ABOUT -->
+<div class="page" id="P-about"><div class="C">
+  <div class="sh"><p class="sh-k">Who We Are</p><h1 class="sh-t">About Daleel</h1></div>
+  <div class="ag">
+    <div>
+      <h2 class="am">Truth guides freedom. Informed citizens shape a better world.</h2>
+      <div class="ab">
+        <p>Daleel is an independent digital news platform committed to uncovering the truth and guiding readers through the complexity of current affairs, politics, and society. Our mission: to illuminate facts, challenge assumptions, and provide reliable reporting that empowers people to understand the world.</p>
+        <p>We publish investigative journalism, analysis, and commentary designed to cut through noise and sensationalism — providing clarity, context, and insight so readers form informed opinions and engage meaningfully in society.</p>
+        <p>Daleel covers the UK, United States, Middle East, Europe, and Asia — with one guiding principle: truth above all else.</p>
+      </div>
+    </div>
+    <div class="prs">
+      <div class="pr"><span class="pr-n">01</span><div><p class="pr-ti">Accuracy</p><p class="pr-d">We verify information rigorously, consult trusted sources, and correct mistakes transparently.</p></div></div>
+      <div class="pr"><span class="pr-n">02</span><div><p class="pr-ti">Fairness</p><p class="pr-d">We present issues clearly, giving voice to multiple perspectives while avoiding undue bias.</p></div></div>
+      <div class="pr"><span class="pr-n">03</span><div><p class="pr-ti">Transparency</p><p class="pr-d">We make our editorial decisions, sources, and reasoning clear to our readers.</p></div></div>
+      <div class="pr"><span class="pr-n">04</span><div><p class="pr-ti">Independence</p><p class="pr-d">We operate free from political, corporate, or activist influence — serving only the public interest.</p></div></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- TEAM -->
+<div class="page" id="P-team"><div class="C">
+  <div class="sh"><p class="sh-k">The People Behind Daleel</p><h1 class="sh-t">Our Team</h1><p class="sh-d">Daleel operates under a clear editorial governance structure committed to accuracy, independence, and accountability.</p></div>
+
+  <div style="padding:32px 0 8px;border-bottom:1px solid var(--ink);margin-top:8px">
+    <p style="font-family:var(--mono);font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)">Leadership</p>
+  </div>
+  <div class="tg" id="team-grid-leadership" style="padding-top:28px">
+    <div class="tm"><p class="tm-r">Publisher &amp; Owner</p><h3 class="tm-n">Arnan Hussein</h3><p class="tm-d">Responsible for the overall operation, ownership, and financial oversight of Daleel, while safeguarding its editorial independence and integrity. Ensures the publication's mission — to illuminate truth and foster understanding — remains uncompromised by external influence.</p></div>
+    <div class="tm"><p class="tm-r">Editor-in-Chief &amp; Executive Editor</p><h3 class="tm-n">Arnan Hussein</h3><p class="tm-d">Holds final editorial responsibility for all content published under Daleel. Sets the editorial vision, oversees coverage priorities, and ensures all reporting upholds accuracy, fairness, and accountability. Acts as the responsible editor for compliance with the Editors' Code of Practice.</p></div>
+    <div class="tm"><p class="tm-r">Standards &amp; Compliance Editor</p><h3 class="tm-n" style="color:var(--faint);font-style:italic">Position Open</h3><p class="tm-d">Ensures Daleel's adherence to the highest ethical and journalistic standards. Reviews sensitive, investigative, or high-risk content prior to publication and provides guidance on legal and regulatory matters, including accuracy, privacy, and fairness.</p></div>
+  </div>
+
+  <div style="padding:32px 0 8px;border-bottom:1px solid var(--ink);margin-top:12px">
+    <p style="font-family:var(--mono);font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)">Editorial Operations</p>
+  </div>
+  <div class="tg" id="team-grid-ops" style="padding-top:28px">
+    <div class="tm"><p class="tm-r">Complaints &amp; Corrections Officer</p><h3 class="tm-n" style="color:var(--faint);font-style:italic">Position Open</h3><p class="tm-d">Manages reader complaints, corrections, and clarifications in a transparent and timely manner. Oversees responses to regulatory correspondence and ensures Daleel's accountability to its readers through fair handling of concerns.</p></div>
+    <div class="tm"><p class="tm-r">Senior Correspondent</p><h3 class="tm-n" style="color:var(--faint);font-style:italic">Position Open</h3><p class="tm-d">Leads in-depth reporting, long-form investigations, and analytical features. Mentors junior reporters and ensures all content meets Daleel's editorial standards of accuracy, balance, and independence.</p></div>
+    <div class="tm"><p class="tm-r">Legal Adviser (External)</p><h3 class="tm-n" style="color:var(--faint);font-style:italic">Position Open</h3><p class="tm-d">Provides guidance on legal matters including defamation, privacy, and media law, ensuring Daleel's reporting adheres to legal and ethical frameworks.</p></div>
+  </div>
+
+  <div style="padding:32px 0 8px;border-bottom:1px solid var(--ink);margin-top:12px">
+    <p style="font-family:var(--mono);font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)">Section Editors</p>
+  </div>
+  <div class="tg" id="team-grid-editors" style="padding-top:28px">
+    <div class="tm"><p class="tm-r">UK Affairs Editor</p><h3 class="tm-n" style="color:var(--faint);font-style:italic">Position Open</h3><p class="tm-d">Directs coverage of UK politics, policy, and social issues, ensuring accuracy and depth in domestic reporting.</p></div>
+    <div class="tm"><p class="tm-r">US Affairs Editor</p><h3 class="tm-n" style="color:var(--faint);font-style:italic">Position Open</h3><p class="tm-d">Oversees analysis and reporting on American politics, governance, and global influence.</p></div>
+    <div class="tm"><p class="tm-r">Middle East Affairs Editor</p><h3 class="tm-n" style="color:var(--faint);font-style:italic">Position Open</h3><p class="tm-d">Leads coverage on regional politics, diplomacy, and conflict within the Middle East, focusing on context and clarity.</p></div>
+    <div class="tm" style="border-top:1px solid var(--rule);padding-top:26px"><p class="tm-r">Far East Affairs Editor</p><h3 class="tm-n" style="color:var(--faint);font-style:italic">Position Open</h3><p class="tm-d">Supervises reporting on East Asian affairs, trade, governance, and regional security dynamics.</p></div>
+    <div class="tm" style="border-top:1px solid var(--rule);padding-top:26px"><p class="tm-r">Correspondent</p><h3 class="tm-n" style="color:var(--faint);font-style:italic">Position Open</h3><p class="tm-d">Conducts research, reporting, and writing across beats, maintaining factual accuracy and ethical integrity. Works closely with editors to uphold Daleel's mission of delivering truth-driven journalism.</p></div>
+  </div>
+
+  <div style="background:var(--cream);border:1px solid var(--rule);padding:28px 32px;margin:40px 0;display:flex;gap:24px;align-items:flex-start">
+    <div>
+      <p style="font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:8px">Regulatory Status</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.8">Daleel is not currently regulated by the Independent Press Standards Organisation (IPSO) but voluntarily adheres to the Editors' Code of Practice and maintains internal compliance procedures aligned with IPSO's principles of accuracy, fairness, and accountability.</p>
+    </div>
+  </div>
+</div></div>
+
+<!-- CONTACT -->
+<div class="page" id="P-contact"><div class="C">
+  <div class="sh"><p class="sh-k">Get In Touch</p><h1 class="sh-t">Contact Us</h1></div>
+  <div class="cog">
+    <div>
+      <div class="cb"><p class="cb-l">Editorial</p><p>For story tips, press enquiries, corrections and editorial matters:<br><a href="/cdn-cgi/l/email-protection#6a021f19190f03040b18040b042a051f1e0605050144090507"><span class="__cf_email__" data-cfemail="503825232335393e31223e313e103f25243c3f3f3b7e333f3d">[email&#160;protected]</span></a></p></div>
+      <div class="cb"><p class="cb-l">Complaints</p><p>If you believe Daleel has published inaccurate or misleading content, please contact us. We acknowledge all complaints promptly and respond within 14 days.</p></div>
+      <div class="cb"><p class="cb-l">Based In</p><p>United Kingdom · husseinonlook.com/uk</p></div>
+      <div class="sl">
+        <a href="https://www.instagram.com/the_individualist_perspective/" target="_blank">Instagram — @the_individualist_perspective</a>
+        <a href="https://www.linkedin.com/company/mindfully-the-individualist-perspective/" target="_blank">LinkedIn — Arnan Hussein</a>
+        <a href="https://twitter.com" target="_blank">Twitter / X — @HusseinOnLook</a>
+        <a href="https://www.youtube.com" target="_blank">YouTube — Daleel Podcast</a>
+      </div>
+    </div>
+    <div>
+      <p style="font-family:var(--serif);font-size:26px;font-weight:700;line-height:1.2;margin-bottom:18px">Seeing beyond headlines.<br><em style="color:var(--muted)">Truth above all.</em></p>
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:18px">Daleel is an independent publication voluntarily adhering to the Editors' Code of Practice and maintaining internal compliance procedures aligned with its principles of accuracy, fairness, and accountability.</p>
+      <p style="font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:.1em">© 2026 Daleel. All rights reserved.</p>
+    </div>
+  </div>
+</div></div>
+
+<!-- POLICIES -->
+<div class="page" id="P-policies"><div class="C">
+  <div class="sh"><p class="sh-k">Legal &amp; Editorial</p><h1 class="sh-t">Policies</h1></div>
+  <div class="pw">
+    <div class="ps"><h2>Privacy Policy</h2><p><em>Last updated: 12/12/2025</em></p><p>Daleel is an independent international digital publication based in the United Kingdom, committed to protecting your personal data and complying with UK GDPR and the Data Protection Act 2018.</p><h3>Who We Are</h3><p>An independent news and commentary platform covering global politics, society, and current affairs. Contact: <a href="/cdn-cgi/l/email-protection#ef879a9c9c8a86818e9d818e81af809a9b83808084c18c8082"><span class="__cf_email__" data-cfemail="660e131515030f080714080708260913120a09090d4805090b">[email&#160;protected]</span></a>. We respond to privacy-related requests within one month.</p><h3>Information We Collect</h3><ul><li>Information you provide directly (contact forms, submissions)</li><li>Automatically collected data (IP address, browser type, pages viewed, cookies)</li><li>Information for editorial purposes under the journalistic exemption</li></ul><h3>Your Rights (UK GDPR)</h3><p>You have the right to access, correct, delete, and port your data, and to withdraw consent at any time.</p></div>
+    <div class="ps"><h2>Complaints Policy</h2><p>We are committed to maintaining high standards of accuracy, fairness, and accountability in our journalism.</p><h3>How to Make a Complaint</h3><p>Email <a href="/cdn-cgi/l/email-protection#345c414747515d5a55465a555a745b4140585b5b5f1a575b59"><span class="__cf_email__" data-cfemail="3a524f49495f53545b48545b547a554f4e5655555114595557">[email&#160;protected]</span></a> including: the article headline and URL, a clear explanation of the issue, and any supporting material.</p><h3>What We Will Do</h3><ul><li>Acknowledge receipt promptly</li><li>Respond substantively within 14 days</li><li>Review by an editor not involved in the original piece</li><li>If upheld: issue a clarification, correction, apology, or removal</li></ul></div>
+    <div class="ps"><h2>Editorial Standards</h2><p>Daleel is dedicated to responsible, independent journalism guided by accuracy, fairness, and transparency, adhering to principles consistent with the Editors' Code of Practice.</p><p>We commit to: reporting accurately and fairly; clearly distinguishing fact, analysis, and opinion; respecting privacy; protecting confidential sources; avoiding discrimination or misrepresentation.</p><p><strong>Regulatory status:</strong> Daleel is not currently regulated by IPSO but voluntarily adheres to the Editors' Code of Practice.</p></div>
+  </div>
+</div></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div><span class="fa">دليل</span><span class="fn">Daleel · Since 2026</span><p class="fp">Independent digital journalism committed to uncovering the truth. Covering UK, US, Middle East, and Far East politics with fearless, factual reporting.</p></div>
+    <div><p class="fct">Sections</p><ul class="fl2"><li onclick="go('uk',null)">United Kingdom</li><li onclick="go('us',null)">United States</li><li onclick="go('me',null)">Middle East</li><li onclick="go('fe',null)">Far East</li><li onclick="go('podcast',null)">Podcast</li></ul></div>
+    <div><p class="fct">Publication</p><ul class="fl2"><li onclick="go('about',null)">About Us</li><li onclick="go('team',null)">Team</li><li onclick="go('policies',null)">Policies</li><li onclick="go('contact',null)">Contact</li></ul></div>
+    <div><p class="fct">Follow</p><ul class="fl2"><li onclick="window.open('https://www.instagram.com/the_individualist_perspective/','_blank')">Instagram</li><li onclick="window.open('https://twitter.com','_blank')">Twitter / X</li><li onclick="window.open('https://www.youtube.com','_blank')">YouTube</li><li onclick="window.open('https://www.linkedin.com/company/mindfully-the-individualist-perspective/','_blank')">LinkedIn</li></ul></div>
+  </div>
+  <div class="fb"><span>© 2026 Daleel. All rights reserved. &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98f0edebebfdf1f6f9eaf6f9f6d8f7edecf4f7f7f3b6fbf7f5">[email&#160;protected]</a> &nbsp;|&nbsp; <span style="cursor:pointer" onclick="go('policies',null)">Privacy Policy</span></span><span>All content produced by Daleel's independent journalists.</span></div>
+</footer>
+
+<!-- ADMIN -->
+<button class="adm-btn" onclick="openAdmin()">+ Add Article</button>
+
+<!-- PASSWORD SCREEN -->
+<div class="adm" id="PWD">
+  <div class="adm-box" style="max-width:360px;text-align:center">
+    <h2 class="adm-h" style="margin-bottom:6px">Admin Access</h2>
+    <p class="adm-s" style="margin-bottom:24px">Enter your password to continue</p>
+    <div class="fr">
+      <input class="fi" id="pwd-input" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')checkPwd()" style="text-align:center;letter-spacing:0.2em">
+    </div>
+    <p id="pwd-error" style="font-family:var(--mono);font-size:10px;color:var(--red);margin-top:8px;display:none">Incorrect password. Try again.</p>
+    <button class="sub-btn" onclick="checkPwd()" style="margin-top:16px;width:100%">Unlock →</button>
+    <button onclick="document.getElementById('PWD').classList.remove('open')" style="margin-top:12px;background:none;border:none;font-family:var(--mono);font-size:10px;color:var(--faint);cursor:pointer;letter-spacing:0.1em;text-transform:uppercase">Cancel</button>
+  </div>
+</div>
+
+<div class="adm" id="ADM">
+  <div class="adm-box">
+    <button class="adm-x" onclick="document.getElementById('ADM').classList.remove('open')">✕</button>
+    <h2 class="adm-h">Daleel Admin</h2>
+
+    <!-- TABS -->
+    <div style="display:flex;gap:0;border-bottom:1px solid var(--rule);margin-bottom:24px">
+      <button onclick="switchTab('art')" id="tab-art" style="font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:10px 20px;cursor:pointer;border:none;border-bottom:2px solid var(--ink);background:none;color:var(--ink)">Articles</button>
+      <button onclick="switchTab('team')" id="tab-team" style="font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:10px 20px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;color:var(--faint)">Team</button>
+    </div>
+
+    <!-- ARTICLE TAB -->
+    <div id="tab-art-panel">
+      <p class="adm-s">Fill in the form below and hit Publish. Articles appear instantly on the homepage and in the correct section.</p>
+      <div class="fg">
+        <div class="fr"><label class="fl">Section</label><select class="fs" id="F-sec"><option value="uk">United Kingdom</option><option value="us">United States</option><option value="me">Middle East</option><option value="fe">Far East</option></select></div>
+        <div class="fr"><label class="fl">Tag (e.g. Labour · Politics)</label><input class="fi" id="F-tag" type="text" placeholder="Labour · Politics"></div>
+      </div>
+      <div class="fr"><label class="fl">Headline</label><input class="fi" id="F-hed" type="text" placeholder="Article headline"></div>
+      <div class="fr"><label class="fl">Standfirst / Summary (shown on cards)</label><input class="fi" id="F-deck" type="text" placeholder="One or two sentence summary"></div>
+      <div class="fr"><label class="fl">Pull Quote (highlighted in article)</label><input class="fi" id="F-pull" type="text" placeholder="A striking quote from the article"></div>
+      <div class="fg">
+        <div class="fr"><label class="fl">Author</label><input class="fi" id="F-auth" type="text" value="Arnan Hussein" placeholder="Arnan Hussein"></div>
+        <div class="fr"><label class="fl">Date (e.g. March 2026)</label><input class="fi" id="F-date" type="text" placeholder="March 2026"></div>
+      </div>
+      <div class="fr"><label class="fl">Article Body (separate paragraphs with a blank line)</label><textarea class="fta" id="F-body" style="min-height:200px" placeholder="Paste your full article text here.&#10;&#10;Separate paragraphs with a blank line.&#10;&#10;You can add an image anywhere with:&#10;&lt;img src=&quot;YOUR_IMAGE_URL&quot; style=&quot;width:100%;margin:20px 0&quot;&gt;"></textarea></div>
+      <button class="sub-btn" onclick="addArt()">Publish Article →</button>
+      <div class="ok" id="OK">✓ Article published successfully!</div>
+      <div class="aml" style="margin-top:28px;padding-top:20px;border-top:1px solid var(--rule)">
+        <p class="aml-t">Published Articles</p>
+        <div class="aml-list" id="AML"></div>
+      </div>
+    </div>
+
+    <!-- TEAM TAB -->
+    <div id="tab-team-panel" style="display:none">
+      <p class="adm-s">Add, edit or remove team members. Changes save instantly to your browser.</p>
+      <div class="fg">
+        <div class="fr"><label class="fl">Role / Title</label><input class="fi" id="TM-role" type="text" placeholder="e.g. UK Affairs Editor"></div>
+        <div class="fr"><label class="fl">Name (or leave blank for Position Open)</label><input class="fi" id="TM-name" type="text" placeholder="e.g. Sarah Johnson"></div>
+      </div>
+      <div class="fr"><label class="fl">Section</label>
+        <select class="fs" id="TM-section">
+          <option value="leadership">Leadership</option>
+          <option value="ops">Editorial Operations</option>
+          <option value="editors">Section Editors</option>
+        </select>
+      </div>
+      <div class="fr"><label class="fl">Description</label><textarea class="fta" id="TM-desc" style="min-height:80px" placeholder="Brief description of their responsibilities..."></textarea></div>
+      <button class="sub-btn" onclick="addTeamMember()">Add Team Member →</button>
+      <div class="ok" id="TM-OK">✓ Team member added!</div>
+      <div class="aml" style="margin-top:28px;padding-top:20px;border-top:1px solid var(--rule)">
+        <p class="aml-t">Custom Team Members</p>
+        <div class="aml-list" id="TML"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.getElementById('td').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+// DATA — defined first so all functions can access
+let CA = JSON.parse(localStorage.getItem('daleel_ca') || '[]');
+let CT = JSON.parse(localStorage.getItem('daleel_team') || '[]');
+const rendered = new Set();
+const baseCounts = {uk:6, us:2, me:2, fe:3};
+
+// TICKER
+function buildTicker() {
+  const base = ['Zahawi joins Reform UK — "The country needs a glorious revolution"','Your Party founded by Corbyn & Sultana: "The system is rigged"','Munich Security Conference: Cracks in Western alliances amid geopolitical strain','Iran protests intensify as rial hits record low of 1,137,500 to the dollar','Takaichi wins Japanese supermajority in historic snap election','Mamdani takes office in NYC — promises rent freeze and affordable housing','Yemen crisis: Millions face famine as international funding falls critically short'];
+  const all = [...CA.map(a=>a.hed), ...base];
+  document.getElementById('tt').innerHTML = [...all,...all].map(h=>`<span class="ti">· ${h}</span>`).join('');
+}
+
+// BUILT-IN ARTICLES
+const BI={
+  zahawi:{s:'uk',tag:'Reform UK · Politics',vol:'Special Issue · Vol. 02 · January 2026',hed:'Glorious Revolution or Devolution?',deck:'The country is in dire need of a glorious revolution, says former chancellor Nadhim Zahawi, as he defects to Reform UK following a refused peerage — and a seven-figure HMRC settlement.',auth:'Arnan Hussein',date:'January 2026',pull:'The country is in dire need of a glorious revolution — nothing works and there is little room for growth.',body:'The defection took place shortly after Mr Zahawi was refused a peerage, Tory sources say. The former chancellor joined Nigel Farage\'s Reform UK, declaring that the country is in dire need of a glorious revolution, adding bluntly that nothing works and that there is little room for growth.\n\nConservatives reportedly resisted Zahawi\'s elevation to the House of Lords, concerned about sending the "right people who make notable contributions." This follows his previous sacking over a tax affair: HM Revenue & Customs investigated his handling of shares in YouGov, the polling company he co-founded, and concluded there were irregularities.\n\nZahawi ultimately paid a seven-figure settlement, reported at £4.8 million including penalties and interest.\n\nCritics from across the political spectrum have weighed in. Labour MP Anna Turley called Zahawi "a discredited and disgraced politician" and highlighted that he had previously criticised his new Reform UK allies for their "divisive and extreme rhetoric."'},
+  yourparty:{s:'uk',tag:'New Parties · Socialism',vol:'Special Issue · Vol. 02 · January 2026',hed:'Will Your Party Decide Your Future?',deck:'A new kind of political party — one that belongs to you. Corbyn and Sultana launch a socialist movement vowing to take on the rich, publicly own utilities, and give power back to the people.',auth:'Arnan Hussein',date:'January 2026',pull:'I do not stand alone. I stand alongside you — this party belongs to the people.',body:'On the 24th of July 2025, Britain witnessed the birth of a new socialist force: Your Party, founded under the shared leadership of Mr Jeremy Corbyn and Ms Zarah Sultana.\n\nMr Corbyn went further, proclaiming that the current political system is rigged and that Your Party exists to challenge and overturn that very structure.\n\nYet his ambitions were swiftly curbed at the party\'s inaugural conference, where members voted instead for a collective leadership model, signalling a rejection of traditional hierarchies in favour of democratic unity.\n\nYour Party champions redistribution of wealth, public ownership of energy, water, rail, and mail, and participatory democracy — including mandatory recall of MPs by constituents.'},
+  manutd:{s:'uk',tag:'Sport · Football',vol:'Special Issue · Vol. 02 · January 2026',hed:'Manchester United is Red',deck:'Under interim manager Michael Carrick, Manchester United delivered a statement of intent at Old Trafford. Manchester is, undeniably, Red.',auth:'Arnan Hussein',date:'January 2026',pull:'At United, winning is not just an option, it\'s an expectation. The history, the fans, the city — it\'s all red. — Sir Alex Ferguson',body:'The exact words of Sir Alex Ferguson from earlier decades echoed in the minds of supporters after a long, difficult period, particularly on 17th January at Old Trafford.\n\nUnder the temporary stewardship of Michael Carrick, the Red Devils delivered a statement of intent. Second-half goals from Bryan Mbeumo and Patrick Chinazaekpere Dorgu secured a thoroughly deserved victory — ending City\'s recent unbeaten run.\n\nFans poured onto social media after the final whistle, joyously summarising the feeling in one simple refrain: Manchester is Red!\n\nThe question on everyone\'s mind is: who will be the next permanent manager? Names like Glasner, Tuchel, Nagelsmann, Southgate, and Luis Enrique have all been linked.'},
+  starmer:{s:'uk',tag:'Labour · Leadership',vol:'Special Issue · Vol. 02 · January 2026',hed:'Labour Against Starmer',deck:'Scottish First Minister John Swinney declares it is the "end of the road" for Keir Starmer, linking Labour\'s fate to the May 2026 elections.',auth:'Arnan Hussein',date:'January 2026',pull:'End of the road for Keir Starmer. — Scottish First Minister John Swinney',body:'Previously, politicians and journalists had predicted that Mr Starmer would not remain in office by Christmas 2025. However, Mr Starmer proved these predictions wrong, entering 2026 with a relatively strong start.\n\nHis firmer stance on foreign policy — most notably refusing to give in to US demands over Greenland — has helped project an image of stronger leadership.\n\nNevertheless, the Scottish First Minister John Swinney claims that Mr Starmer will be removed from office by Christmas 2026. He has described the Labour Party as "absolutely toiling" and argues the May 2026 elections will mark the "end of the road" for Mr Starmer.\n\nMr Starmer responded, stating that Mr Swinney\'s prediction is "insulting to the intelligence of the Scottish people."'},
+  munich:{s:'uk',tag:'Global Security',vol:'Special Issue · Vol. 02 · February 2026',hed:'Global Security in Focus: The 62nd Munich Security Conference',deck:'How will the world navigate rising tensions while maintaining peace and cooperation in an increasingly uncertain global landscape?',auth:'Arnan Hussein',date:'February 2026',pull:'Peace and stability are not automatic. The international community must actively engage in dialogue and cooperation.',body:'In early 2026, world leaders and diplomats gathered in Munich for the 62nd Munich Security Conference, an annual forum addressing the most urgent global security challenges.\n\nThe conference highlighted how security today extends beyond traditional military concerns to include cyber threats, technology, and economic stability.\n\nEuropean and North American allies stressed the need for coordinated responses to shared threats, but differences over defence strategies, trade, and technological leadership revealed cracks in long-standing alliances.\n\nThe event also drew public attention, with large protests outside the venue in solidarity with pro-democracy movements in Iran. As the conference concluded, the core challenge remained clear: peace and stability are not automatic.'},
+  greenland:{s:'us',tag:'Trump · Foreign Policy',vol:'Special Issue · Vol. 02 · January 2026',hed:'Getting Greenland — The Easy Way or Hard Way?',deck:'US President Donald Trump insists his country needs to acquire Greenland for national security reasons and has not ruled out using military force.',auth:'Arnan Hussein',date:'January 2026',pull:'US Secretary of State Marco Rubio reassured lawmakers that Washington does not intend to invade Greenland.',body:'Donald Trump has renewed interest in Greenland, calling the Arctic island vital to US security for missile defence and monitoring naval activity. While Trump has suggested purchase as an option, Denmark and Greenland have firmly rejected any US takeover.\n\nThis is not new: the US explored military expansion on Greenland during the Cold War but faced technical and diplomatic obstacles. Trump previously floated buying the island in 2019, only to be refused.\n\nUS Secretary of State Marco Rubio reassured lawmakers that Washington does not intend to invade Greenland.\n\nGreenlandic leaders continue to emphasise self-determination and NATO defence. Can strategic ambition ever outweigh the will of a people?'},
+  mamdani:{s:'us',tag:'New York · Local Politics',vol:'Special Issue · Vol. 02 · February 2026',hed:"Mamdani's New NYC",deck:"Zohran Mamdani takes office as New York City's new mayor, promising rent freezes, affordable housing and a surcharge on the wealthy.",auth:'Arnan Hussein',date:'February 2026',pull:'"I do not stand alone. I stand alongside you. If you are a New Yorker, I am your mayor." — Mamdani',body:"After making headlines through his attention-catching social media videos, Mr Mamdani was accepted into the office of NYC Mayor on the 1st of January, succeeding Eric Adams in a decisive election.\n\nMr Mamdani has campaigned heavily on reducing living costs and promised rent relief, including efforts to freeze rents on rent-stabilised apartments and build tens of thousands of new, permanently affordable, union-built units over the next decade.\n\nHe has also promised a rise in corporate tax and the addition of a surcharge on high-income earners, and plans to tackle negligent landlords by expanding fines.\n\nBut will bold promises and online popularity be enough to turn New York's deep-rooted affordability crisis into lasting change?"},
+  iran:{s:'me',tag:'Iran · Protests',vol:'Special Issue · Vol. 02 · January 2026',hed:'Is This It for Iran?',deck:'No going back as protesters target government buildings. The rial hits an all-time low. Security forces respond with lethal force.',auth:'Arnan Hussein',date:'January 2026',pull:'No going back as protesters target government buildings nationwide.',body:'As protests continue to strengthen across Iran, Donald Trump has threatened potential action, hinting at possible intervention while speaking aboard Air Force One.\n\nThe immediate trigger: the Iranian rial at an all-time low of 1,137,500 IRR to 1 USD. This devaluation is a direct consequence of decreased oil demand from China, combined with falling global oil prices.\n\nThe protests initially erupted among shopkeepers in Tehran — eerily reminiscent of the 2018 protests. Security forces responded with lethal force. Reports indicate that three children were killed due to indiscriminate firing by security personnel.\n\nContrary to expectations, the actions of security forces appear to have strengthened the resolve of protesters, fuelling an anti-regime movement that has now spread nationwide.'},
+  yemen:{s:'me',tag:'Yemen · Humanitarian',vol:'Special Issue · Vol. 02 · February 2026',hed:"Yemen's Humanitarian Crisis: Worldwide Alarm Over Worsening Conditions",deck:"Will the world act in time to save Yemen's millions, or will the crisis deepen further?",auth:'Arnan Hussein',date:'February 2026',pull:"Yemen's people continue to endure unimaginable hardship, trapped in the unrelenting cycle of conflict and deprivation.",body:"As 2026 unfolds, Yemen remains one of the world's most severe humanitarian emergencies, with millions of civilians facing hunger, disease, displacement, and collapsing basic services after more than a decade of war.\n\nHumanitarian access has become increasingly difficult, with ongoing hostilities and logistical barriers preventing aid workers from reaching communities in need.\n\nDespite the scale of suffering, international funding remains severely under-resourced. Cuts in aid and competing global priorities have left crucial programmes shuttered.\n\nAs the world watches, Yemen's people continue to endure unimaginable hardship, and the urgent question remains whether timely international action can prevent further catastrophe."},
+  china:{s:'fe',tag:'China · Military',vol:'Special Issue · Vol. 02 · February 2026',hed:'China, Xi Jinping and the Firing of the Top General',deck:"Will China's military purge strengthen party control but weaken operational unity — or will it reinforce Xi's authority at all costs?",auth:'Arnan Hussein',date:'February 2026',pull:'General Zhang Youxia — effectively China\'s second-highest military leader — placed under investigation for "serious violations of discipline and law."',body:"In early 2026, Xi Jinping has dramatically reshaped China's military leadership, removing or investigating some of the PLA's most senior figures.\n\nGeneral Zhang Youxia, who until recently was Vice-Chairman of the Central Military Commission, has been placed under investigation for serious violations of discipline and law. This is an unusually public and high-profile action against a figure long seen as a close ally of President Xi.\n\nAnother senior officer, General Liu Zhenli, has also been targeted in the same sweep, leaving the CMC heavily depleted of experienced leaders.\n\nBeijing appears to want to frame the purge as normalisation rather than crisis."},
+  trafalgar:{s:'uk',tag:'UK Politics · Islam',vol:'Special Issue · UK · March 2026',hed:'Glorious Hypocrisy: The Conservatives\' Selective Outrage Over Faith in Public Life',deck:'The Conservatives celebrated Diwali at Downing Street, stayed silent on a Sikh rally that closed Luton, and called Muslim prayer in Trafalgar Square an act of domination — the hypocrisy could not be clearer.',auth:'Arnan Hussein',date:'March 2026',pull:'If Rishi Sunak lighting diyas at 10 Downing Street was not an act of domination, then nothing in Trafalgar Square ever could be.',body:'Britain prides itself on a set of values enshrined not just in law but in national character — tolerance, fairness, freedom of expression, and the right to practise one\'s faith without persecution. These are not Labour values or Conservative values. They are British values. The very same values that allowed this island nation to welcome generations of immigrants, build one of the world\'s most diverse cities, and stand as a beacon of liberal democracy to the world.\n\nIt is therefore deeply troubling when those who claim to be the guardians of British values reveal, through their own words, that they do not actually believe in them — at least not for everyone.\n\nOn 16 March 2026, thousands of people gathered at Trafalgar Square for an Open Iftar — a public breaking of the Ramadan fast organised by the Ramadan Tent Project, attended by people of all faiths, including Christians, Jews, Hindus, Sikhs, and atheists. London Mayor Sadiq Khan described it as the biggest iftar in the Western world. It was a moment of communal joy, of shared humanity, of Britain at its best.\n\nConservative shadow justice secretary Nick Timothy looked at those scenes and saw something else entirely. He took to X and declared that "mass ritual prayer in public places is an act of domination." He said the adhan — the Islamic call to prayer — is "a declaration of domination" when called in a public place, and that such rituals are "not welcome in our public places and shared institutions."\n\nLet us be clear about what was actually said here. A senior Conservative politician looked at Muslim men and women praying peacefully in a public square, with full permission, and called it an act of domination. Not celebration. Not expression. Domination.\n\nHere is a question that demands an answer. In November 2020, then Prime Minister Rishi Sunak — a proud Hindu — lit diyas at 10 Downing Street and celebrated Diwali. He invited guests. He wore traditional dress. He made the residence of the British Prime Minister, the most recognisable address in British politics, the stage for a Hindu religious celebration broadcast to the entire world.\n\nWas that an act of domination?\n\n10 Downing Street is not just any public space. It is where the leader of this country lives and works. It is where decisions affecting 67 million people are made. It is where foreign dignitaries visit. It is where the world looks when it wants to understand Britain. If Muslim prayer in Trafalgar Square — a public square — is an "act of domination," then surely Hindu prayer at the very seat of British government is more so.\n\nWhere was Nick Timothy then? Where was Kemi Badenoch? Where was Nigel Farage with his calls to ban "mass religious observances in historic British sites"? The silence is deafening. And it tells you everything you need to know.\n\nSpeaking from personal experience, there was once a large Sikh rally in Luton that brought significant parts of the town to a standstill. Major roads were closed. Traffic was backed up for miles. The disruption affected thousands of people going about their daily lives — in November, in the cold, with no warning and nowhere to go.\n\nNot a single Conservative MP called it an act of domination. Not one. There were no posts on X declaring that Luton town centre "belongs to all of us." There was no outrage, no columns in the Telegraph, no demands that religious gatherings be moved indoors. Because it was not domination. It was a community expressing its faith and identity in public. Which is exactly what Muslims were doing on 16 March 2026. The only difference — and let us not pretend otherwise — is the religion involved.\n\nConservative leader Kemi Badenoch chose to make an issue of women praying in a segregated section at the Trafalgar Square iftar. On the surface this sounds like concern for gender equality. Look closer and it reveals something far more troubling — a political leader commenting on Islamic religious practice without any apparent understanding of it.\n\nIn Islam, men and women pray in separate sections. This is not a sign of oppression. It is rooted in Islamic jurisprudence — in the rules of prayer, of modesty, and of spiritual focus. When Muslims pray, the physical postures of salah — including prostration — require separation of the sexes out of respect and decorum, not hierarchy. Muslim women across the world, including highly educated, professionally accomplished, fiercely independent women, pray separately by choice and by conviction. It is their faith. It is their decision.\n\nOne must ask — has Kemi Badenoch studied Islam? Has she spoken to Muslim women about what their faith means to them? Has she consulted a single Islamic scholar before making these pronouncements? If the answer is no — and her comments suggest it is — then she has no business commenting. It is not strength to criticise a religion you do not understand. It is ignorance dressed up as principle.\n\nPrime Minister Keir Starmer said it plainly at PMQs: "I\'ve never heard her party call out anything other than the Muslim events. It\'s only when Muslims are praying. The only conclusion is the Tory Party has got a problem with Muslims." He is right.\n\nWhen Hindus celebrate Diwali — at Downing Street itself — it is beautiful. When Sikhs hold rallies that close town centres, it passes without comment. When Christians perform the Passion of the Christ in Trafalgar Square annually, it is tradition. But when Muslims pray — peacefully, lawfully, with permission, on a cold March evening during their holiest month — it is domination.\n\nThat is not the defence of British values. That is the betrayal of them. And it is, frankly, disgusting.\n\nDaleel will always call it out — whoever it comes from, whatever faith is targeted, whatever political party does it. That is what independent journalism is for.\n\nKnow the Truth.'},
+  japan:{s:'fe',tag:'Japan · Election',vol:'Special Issue · Vol. 02 · February 2026',hed:"Japan's Snap Election and Takaichi's Historic Victory",deck:"Will Takaichi be able to turn her electoral mandate into lasting policy change, or will domestic and regional challenges limit her impact?",auth:'Arnan Hussein',date:'February 2026',pull:"Japan's first female prime minister wins a supermajority — the LDP's best result since the current parliamentary system was established.",body:"In early 2026, Sanae Takaichi, Japan's first female prime minister, called a rare snap general election for 8 February 2026, dissolving the lower house of parliament just months after assuming office.\n\nThe gamble paid off decisively. Takaichi's Liberal Democratic Party (LDP), in alliance with the Japan Innovation Party, won a supermajority in the 465-seat House of Representatives, marking the best result for her party since the current parliamentary system was established.\n\nDespite the strong victory, observers noted that the number of women elected to the lower house actually fell, highlighting ongoing challenges for female representation even as the nation elected its first female premier.\n\nNow backed by a clear mandate, Takaichi faces the task of translating her electoral success into concrete policy outcomes."}
+};
+
+// NAVIGATION
+function go(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  const p = document.getElementById('P-' + name);
+  if (p) p.classList.add('on');
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  window.scrollTo({top:0, behavior:'smooth'});
+  renderCA();
+}
+
+// OPEN ARTICLE
+function oa(id) {
+  const a = BI[id] || CA.find(x => x.id === id);
+  if (!a) return;
+  const paras = a.body.split(/\n\n+/).filter(p=>p.trim()).map(p => `<p>${p.trim()}</p>`).join('');
+  const sec = a.s || a.section || 'home';
+  document.getElementById('AR').innerHTML = `
+    <button class="back" onclick="go('${sec}',null)">Back</button>
+    <p class="av">${a.vol||''}</p>
+    <p class="at">${a.tag||''}</p>
+    <h1 class="ah">${a.hed}</h1>
+    <p class="ad">${a.deck||''}</p>
+    <div class="aby"><span>By <span class="aau">${a.auth||'Arnan Hussein'}</span></span><span>${a.date||''}</span></div>
+    <div class="abody">${paras}${a.pull?`<div class="apq"><p>${a.pull}</p></div>`:''}</div>
+    <p class="afoot">&copy; 2026 Daleel. All content produced by Daleel's independent journalists. husseinonlook.com/uk</p>
+  `;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.getElementById('P-article').classList.add('on');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// RENDER CUSTOM ARTICLES
+function renderCA() {
+  // Clear and re-render all custom article cards in section lists
+  document.querySelectorAll('[id^="CA-"]').forEach(el => el.remove());
+  rendered.clear();
+
+  CA.forEach(a => {
+    const sec = a.s || a.section;
+    const listId = 'L-' + sec;
+    const artId = 'CA-' + a.id;
+    rendered.add(artId);
+    const list = document.getElementById(listId);
+    if (list) {
+      const el = document.createElement('div');
+      el.className = 'ac';
+      el.id = artId;
+      el.innerHTML = `<p class="ac-v">${a.vol||''}</p><p class="ac-t">${a.tag||''}</p><h2 class="ac-h">${a.hed}</h2><p class="ac-s">${a.deck||''}</p><p class="ac-m">By ${a.auth||'Arnan Hussein'}</p><button class="rb" onclick="event.stopPropagation();oa('${a.id}')">Read Article</button>`;
+      el.onclick = () => oa(a.id);
+      list.appendChild(el);
+    }
+  });
+
+  // Home latest section
+  const homeNew = document.getElementById('home-new');
+  if (CA.length > 0) {
+    const cols = Math.min(CA.length, 3);
+    homeNew.innerHTML = `
+      <div class="div"><span class="div-r"></span><span class="div-l">Latest</span><span class="div-r"></span></div>
+      <div class="cg" style="grid-template-columns:repeat(${cols},1fr)">
+        ${[...CA].reverse().map(a=>`<div class="cd" onclick="oa('${a.id}')" style="animation:fi .4s ease both">
+          <p class="cd-r">${a.tag||''}</p>
+          <h3 class="cd-h">${a.hed}</h3>
+          <p class="cd-d">${a.deck||''}</p>
+          <p class="cd-m" style="display:flex;align-items:center;gap:6px">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block"></span>
+            ${a.date||''} · ${a.auth||'Arnan Hussein'}
+          </p>
+        </div>`).join('')}
+      </div>`;
+  } else {
+    homeNew.innerHTML = '';
+  }
+
+  // Update counts
+  ['uk','us','me','fe'].forEach(s => {
+    const extra = CA.filter(a=>(a.s||a.section)===s).length;
+    const el = document.getElementById(s+'c');
+    if (el) { const n = baseCounts[s]+extra; el.textContent = n+' article'+(n!==1?'s':''); }
+  });
+
+  renderAML();
+}
+
+// ADD ARTICLE
+function addArt() {
+  const hedEl = document.getElementById('F-hed');
+  const bodyEl = document.getElementById('F-body');
+  if (!hedEl || !bodyEl) { alert('Form elements not found. Please refresh the page.'); return; }
+  
+  const hed = hedEl.value.trim();
+  const body = bodyEl.value.trim();
+  
+  if (!hed) { alert('Please enter a headline.'); return; }
+  if (!body) { alert('Please enter the article body text.'); return; }
+
+  const secEl = document.getElementById('F-sec');
+  const tagEl = document.getElementById('F-tag');
+  const deckEl = document.getElementById('F-deck');
+  const pullEl = document.getElementById('F-pull');
+  const authEl = document.getElementById('F-auth');
+  const dateEl = document.getElementById('F-date');
+
+  const id = 'ca_' + Date.now();
+  const now = new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  const a = {
+    id,
+    s: secEl ? secEl.value : 'uk',
+    tag: (tagEl && tagEl.value.trim()) || 'News',
+    hed,
+    deck: (deckEl && deckEl.value.trim()) || hed,
+    pull: (pullEl && pullEl.value.trim()) || '',
+    auth: (authEl && authEl.value.trim()) || 'Arnan Hussein',
+    date: (dateEl && dateEl.value.trim()) || now,
+    vol: 'Daleel · ' + ((dateEl && dateEl.value.trim()) || now),
+    body
+  };
+
+  CA.push(a);
+  localStorage.setItem('daleel_ca', JSON.stringify(CA));
+
+  // Reset form
+  if (hedEl) hedEl.value = '';
+  if (bodyEl) bodyEl.value = '';
+  if (tagEl) tagEl.value = '';
+  if (deckEl) deckEl.value = '';
+  if (pullEl) pullEl.value = '';
+  if (authEl) authEl.value = 'Arnan Hussein';
+  if (dateEl) dateEl.value = '';
+
+  const ok = document.getElementById('OK');
+  if (ok) { ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'), 3000); }
+
+  renderCA();
+  buildTicker();
+}
+
+// DELETE ARTICLE
+function delArt(id) {
+  CA = CA.filter(a => a.id !== id);
+  localStorage.setItem('daleel_ca', JSON.stringify(CA));
+  renderCA();
+  buildTicker();
+}
+
+// ADMIN ARTICLE LIST
+function renderAML() {
+  const list = document.getElementById('AML');
+  if (!list) return;
+  if (CA.length === 0) {
+    list.innerHTML = '<p style="font-family:var(--mono);font-size:10px;color:var(--faint)">No custom articles yet.</p>';
+  } else {
+    list.innerHTML = CA.map(a=>`<div class="ami"><div><p class="ami-h">${a.hed}</p><p class="ami-m">${a.tag} · ${a.date}</p></div><button class="ami-d" onclick="delArt('${a.id}')">Delete</button></div>`).join('');
+  }
+}
+
+// ADMIN TABS
+function switchTab(tab) {
+  document.getElementById('tab-art-panel').style.display = tab==='art' ? 'block' : 'none';
+  document.getElementById('tab-team-panel').style.display = tab==='team' ? 'block' : 'none';
+  document.getElementById('tab-art').style.borderBottomColor = tab==='art' ? 'var(--ink)' : 'transparent';
+  document.getElementById('tab-art').style.color = tab==='art' ? 'var(--ink)' : 'var(--faint)';
+  document.getElementById('tab-team').style.borderBottomColor = tab==='team' ? 'var(--ink)' : 'transparent';
+  document.getElementById('tab-team').style.color = tab==='team' ? 'var(--ink)' : 'var(--faint)';
+}
+
+// TEAM MEMBERS
+function addTeamMember() {
+  const role = (document.getElementById('TM-role').value || '').trim();
+  const desc = (document.getElementById('TM-desc').value || '').trim();
+  if (!role) { alert('Please enter a role/title.'); return; }
+  const tm = {
+    id: 'tm_' + Date.now(),
+    role,
+    name: (document.getElementById('TM-name').value || '').trim(),
+    section: document.getElementById('TM-section').value,
+    desc
+  };
+  CT.push(tm);
+  localStorage.setItem('daleel_team', JSON.stringify(CT));
+  document.getElementById('TM-role').value = '';
+  document.getElementById('TM-name').value = '';
+  document.getElementById('TM-desc').value = '';
+  const ok = document.getElementById('TM-OK');
+  if (ok) { ok.classList.add('show'); setTimeout(()=>ok.classList.remove('show'), 3000); }
+  renderTeam();
+}
+
+function delTeamMember(id) {
+  CT = CT.filter(t => t.id !== id);
+  localStorage.setItem('daleel_team', JSON.stringify(CT));
+  renderTeam();
+}
+
+function renderTeam() {
+  const list = document.getElementById('TML');
+  if (list) {
+    list.innerHTML = CT.length === 0
+      ? '<p style="font-family:var(--mono);font-size:10px;color:var(--faint)">No custom team members yet.</p>'
+      : CT.map(t=>`<div class="ami"><div><p class="ami-h">${t.role}</p><p class="ami-m">${t.name||'Position Open'} · ${t.section}</p></div><button class="ami-d" onclick="delTeamMember('${t.id}')">Delete</button></div>`).join('');
+  }
+  ['leadership','ops','editors'].forEach(sec => {
+    const members = CT.filter(t=>t.section===sec);
+    const container = document.getElementById('team-custom-'+sec);
+    if (container) {
+      container.innerHTML = members.map(t=>`<div class="tm"><p class="tm-r">${t.role}</p><h3 class="tm-n" ${!t.name?'style="color:var(--faint);font-style:italic"':''}>${t.name||'Position Open'}</h3><p class="tm-d">${t.desc||''}</p></div>`).join('');
+    }
+  });
+}
+
+// ADMIN PASSWORD
+const ADMIN_PWD = 'huseeinonlook';
+let adminUnlocked = false;
+
+function openAdmin() {
+  if (adminUnlocked) {
+    document.getElementById('ADM').classList.add('open');
+  } else {
+    document.getElementById('PWD').classList.add('open');
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('pwd-error').style.display = 'none';
+    setTimeout(()=>document.getElementById('pwd-input').focus(), 100);
+  }
+}
+
+function checkPwd() {
+  if (document.getElementById('pwd-input').value === ADMIN_PWD) {
+    adminUnlocked = true;
+    document.getElementById('PWD').classList.remove('open');
+    document.getElementById('ADM').classList.add('open');
+    document.getElementById('pwd-input').value = '';
+  } else {
+    document.getElementById('pwd-error').style.display = 'block';
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('pwd-input').focus();
+  }
+}
+
+// INIT
+buildTicker();
+renderCA();
+renderTeam();
+</script>
+</body>
+</html>
